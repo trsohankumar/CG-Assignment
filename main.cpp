@@ -1,11 +1,8 @@
 /**************************
-*	File Name:	Hot air balloon                                                 *
+*	File Name:	Hot air balloon                                               *
 *	                                                                          *
-*   Description: Animated Hot aid balloon                                     *
+*   Description: Animated Hot air balloon                                     *
 *													                          *
------------------------------------------------------------------------------
-*   Mod Log																	  *
------------------------------------------------------------------------------
 *																			  *
 **************************/
 
@@ -42,53 +39,6 @@ void bitmap_output(int x, int y, char *string, void *font)
         glutBitmapCharacter(font, string[i]);
     }
 }
-
-//function to integer to string
-void int_str(int rad,char r[])
-{
-    switch(rad)
-    {
-    case 1 :
-        strcpy(r, "1");
-        break;
-    case 2 :
-        strcpy(r, "2");
-        break;
-    case 3 :
-        strcpy(r, "3");
-        break;
-    case 4 :
-        strcpy(r, "4");
-        break;
-    case 5 :
-        strcpy(r, "5");
-        break;
-    case 6 :
-        strcpy(r, "6");
-        break;
-    case 7 :
-        strcpy(r, "7");
-        break;
-    case 8 :
-        strcpy(r, "8");
-        break;
-    case 9 :
-        strcpy(r, "9");
-        break;
-    case 10 :
-        strcpy(r, "10");
-        break;
-    }
-
-}
-
-
-
-
-
-
-
-
 
 void front()
 {
@@ -188,7 +138,6 @@ void display(void)
     {
         glLoadIdentity();
         glBegin(GL_POLYGON);
-        //bitmap_output(20, 100, "Press Q to quit",GLUT_BITMAP_TIMES_ROMAN_24);
         glColor3f(1, 0, 0);
         glVertex3f(x1_position - 0.22, y1_position + 0, 0.1);
         glVertex3f(x1_position - 0.21, y1_position + 0.1, 0.1);
@@ -226,6 +175,34 @@ void display(void)
         glVertex3f(x1_position - 0.03, y1_position - 0.4, 0.1);
         glVertex3f(x1_position - 0.03, y1_position - 0.67, 0.1);
         glEnd();
+
+        glBegin(GL_POLYGON);                        // Middle circle
+        double radius = 0.025;
+        double ori_x = x1_position;                         // the origin or center of circle
+        double ori_y = y1_position - 0.55;
+        double PI  = 3.1416;
+        for (int i = 0; i <= 300; i++)
+        {
+            double angle = 2 * PI * i / 300;
+            double x = cos(angle) * radius;
+            double y = sin(angle) * radius;
+
+            glVertex2d(ori_x + x, ori_y + y);
+        }
+        glEnd();
+        glBegin(GL_LINES);
+        glVertex2d(ori_x,ori_y- 0.02);
+        glVertex2d(ori_x,ori_y- 0.130);
+        glEnd();
+        glBegin(GL_LINES);
+        glVertex2d(ori_x,ori_y- 0.06);
+        glVertex2d(ori_x + 0.03,ori_y- 0.05);
+        glEnd();
+        glBegin(GL_LINES);
+        glVertex2d(ori_x,ori_y- 0.06);
+        glVertex2d(ori_x - 0.03,ori_y- 0.05);
+        glEnd();
+
     }
     glutSwapBuffers();
 
@@ -256,14 +233,7 @@ void keyboard (unsigned char key, int x, int y)
     }
 }
 
-void reshape(int w, int h)
-{
-    glViewport(0, 0, w, h);
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluOrtho2D(-0, 0, -0, 0);
-    glMatrixMode(GL_MODELVIEW);
-}
+
 
 void init(void)
 {
@@ -358,7 +328,7 @@ int main(int argc, char ** argv)
     glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGB);
     glutInitWindowPosition(50,50);
     glutInitWindowSize(900,600);
-    glutCreateWindow("Sorting Algorithm Visualiser");
+    glutCreateWindow("Hot Air Balloon");
     init();
 
     glutDisplayFunc(display);
